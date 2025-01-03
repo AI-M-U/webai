@@ -4,15 +4,17 @@
     <title>Meta-Major Plan Generator</title>
     <script>
         async function generatePlan() {
-            const major = document.getElementById("major").value;
-            const backendUrl = "https://reihanehmaarefdoust.pythonanywhere.com/"; // Replace with your actual URL
+            // Backend URL pointing to your Flask app
+            const backendUrl = "https://reihanehmaarefdoust.pythonanywhere.com/";
 
+            const major = document.getElementById("major").value;
             if (!major) {
                 alert("Please enter a major.");
                 return;
             }
 
             try {
+                // Making the POST request to the Flask backend
                 const response = await fetch(backendUrl, {
                     method: "POST",
                     headers: {
@@ -24,11 +26,14 @@
                 const data = await response.json();
 
                 if (response.ok) {
+                    // Display the suggestion from the backend
                     document.getElementById("result").textContent = data.suggestion || "No response generated.";
                 } else {
+                    // Handle backend error responses
                     document.getElementById("result").textContent = `Error: ${data.error || "An error occurred."}`;
                 }
             } catch (error) {
+                // Handle network errors
                 document.getElementById("result").textContent = `Network error: ${error.message}`;
             }
         }

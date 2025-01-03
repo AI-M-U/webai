@@ -5,24 +5,31 @@
     <script>
         async function generatePlan() {
             const major = document.getElementById("major").value;
+            const backendUrl = "https://reihanehmaarefdoust.pythonanywhere.com/"; // Replace with your actual URL
+
             if (!major) {
                 alert("Please enter a major.");
                 return;
             }
 
-            const response = await fetch("/generate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ major })
-            });
+            try {
+                const response = await fetch(backendUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ major })
+                });
 
-            const data = await response.json();
-            if (response.ok) {
-                document.getElementById("result").textContent = data.suggestion || "No response generated.";
-            } else {
-                document.getElementById("result").textContent = data.error || "An error occurred.";
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById("result").textContent = data.suggestion || "No response generated.";
+                } else {
+                    document.getElementById("result").textContent = `Error: ${data.error || "An error occurred."}`;
+                }
+            } catch (error) {
+                document.getElementById("result").textContent = `Network error: ${error.message}`;
             }
         }
     </script>

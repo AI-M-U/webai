@@ -1,48 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Meta-Major Plan Generator</title>
-    <script>
-        async function generatePlan() {
-            // Backend URL pointing to your Flask app
-            const backendUrl = "https://reihanehmaarefdoust.pythonanywhere.com/";
-
-            const major = document.getElementById("major").value;
-            if (!major) {
-                alert("Please enter a major.");
-                return;
-            }
-
-            try {
-                // Making the POST request to the Flask backend
-                const response = await fetch(backendUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ major })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    // Display the suggestion from the backend
-                    document.getElementById("result").textContent = data.suggestion || "No response generated.";
-                } else {
-                    // Handle backend error responses
-                    document.getElementById("result").textContent = `Error: ${data.error || "An error occurred."}`;
-                }
-            } catch (error) {
-                // Handle network errors
-                document.getElementById("result").textContent = `Network error: ${error.message}`;
-            }
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiply Numbers</title>
 </head>
 <body>
-    <h1>Meta-Major Plan Generator</h1>
-    <input type="text" id="major" placeholder="Enter major name" />
-    <button onclick="generatePlan()">Generate Plan</button>
-    <pre id="result"></pre>
+    <h1>Multiply Two Numbers</h1>
+    <form action="multiply" method="post">
+        <label for="num1">Number 1:</label>
+        <input type="text" id="num1" name="num1" required><br><br>
+        <label for="num2">Number 2:</label>
+        <input type="text" id="num2" name="num2" required><br><br>
+        <button type="submit">Multiply</button>
+    </form>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meta-Major Plan Generator</title>
+    <script>
+        async function generatePlan() {
+            const major = document.getElementById("major").value;
+            if (!major) {
+                alert("Please enter a major.");
+                return;
+            }
+
+            const response = await fetch("/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ major })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById("result").textContent = data.suggestion || "No response generated.";
+            } else {
+                document.getElementById("result").textContent = data.error || "An error occurred.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Meta-Major Plan Generator</h1>
+    <input type="text" id="major" placeholder="Enter major name" />
+    <button onclick="generatePlan()">Generate Plan</button>
+    <pre id="result"></pre>
+</body>
+</html>
